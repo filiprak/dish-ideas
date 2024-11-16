@@ -16,13 +16,22 @@ class Api {
     }
 
     public async recipe() {
-        return this.callCompletions({
+        const result = await this.callCompletions({
             messages: [
                 {
                     role: 'user',
-                    content: 'Explain the importance of fast language models'
+                    content: 'Give an idea for meal recipe for today'
                 }
             ],
-        })
+        });
+
+        const text = (result?.choices?.[0]?.message?.content || '') as string;
+
+        console.log(result)
+
+        return text;
     }
 }
+
+export const api = new Api();
+export default api;
