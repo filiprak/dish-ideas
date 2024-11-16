@@ -2,6 +2,7 @@
   "name": "dish-ideas",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build"
