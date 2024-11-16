@@ -1,3 +1,4 @@
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js', { scope: '/', type: 'module' });
-}
+import { createApp } from 'vue';
+import App from './pages/App.vue';
+
+createApp(App).mount('#app');
