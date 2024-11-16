@@ -2,8 +2,7 @@ import { Config } from 'tailwindcss';
 
 const config: Config = {
     content: [
-        "./index.html",
-        "./src/**/*.{vue,js,ts,jsx,tsx}",
+        './src/**/*.{vue,js,ts,jsx,tsx,html}',
     ],
     theme: {
         extend: {},
