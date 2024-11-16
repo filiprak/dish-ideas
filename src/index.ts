@@ -1,4 +1,7 @@
 import { createApp } from 'vue';
-import App from './pages/App.vue';
+import Index from './Index.vue';
+import router from './router';
 
-createApp(App).mount('#app');
+createApp(Index)
+    .use(router)
+    .mount('#app');
