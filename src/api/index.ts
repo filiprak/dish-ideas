@@ -20,11 +20,7 @@ class Api {
             messages: [
                 {
                     role: 'system',
-                    content: 'Format response in markdown syntax. In following structure: recipe name, ingredients, instructions'
-                },
-                {
-                    role: 'user',
-                    content: 'Give an idea for meal recipe for today'
+                    content: 'Give an idea exactly for breakfast, lunch, dinner and meals to eat today. You must always format response in the structure of markdown list.'
                 },
             ],
         });

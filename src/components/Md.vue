@@ -10,5 +10,10 @@ defineProps<{
 }>();
 </script>
 <style>
-
+.md ul,
+.md ol {
+    list-style: disc;
+    padding: 10px;
+    margin: 10px;
+}
 </style>
