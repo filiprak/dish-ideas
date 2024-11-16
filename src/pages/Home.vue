@@ -2,7 +2,7 @@
     <Layout class="home">
         <template #bottom>
             <Btn @click="load"
-                 class="w-full py-5 rounded-full">Generate</Btn>
+                 class="w-full py-5 rounded-none">Generate</Btn>
         </template>
     </Layout>
 </template>
