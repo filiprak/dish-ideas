@@ -21,10 +21,6 @@
     console.log(r)
 });
 
-const url = new URL('./sw/index.js', import.meta.url).href;
-
-console.log(url)
-
-// if ('serviceWorker' in navigator) {
-//     navigator.serviceWorker.register('/sw.js', { scope: '/' });
-// }
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/assets/sw.js', { scope: '/' });
+}
