@@ -19,4 +19,4 @@
     }).then(r => r.json());
 
     console.log(r)
-})();
+});
