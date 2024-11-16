@@ -15,6 +15,7 @@
         "removeComments": true,
         "target": "ES6",
         "esModuleInterop": true,
+        "module": "ESNext",
         "moduleResolution": "bundler",
         "alwaysStrict": true,
         "allowUnreachableCode": false,
