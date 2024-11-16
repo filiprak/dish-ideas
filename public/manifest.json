@@ -1,0 +1,16 @@
+{
+    "name": "Dish IDEAS",
+    "short_name": "Dish IDEAS",
+    "description": "A basic application that can generate everyday ideas for dishes.",
+    "start_url": "/",
+    "background_color": "#222222",
+    "theme_color": "#000000",
+    "orientation": "any",
+    "display": "standalone",
+    "icons": [
+        {
+            "src": "/assets/logo.svg",
+            "sizes": "512x512"
+        }
+    ]
+}
