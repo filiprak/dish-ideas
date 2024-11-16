@@ -1,3 +1,5 @@
+/// <reference lib="webworker" />
+
 const CACHE_NAME = `dish-ideas-v1`;
 
 function log(msg: string, ...args: unknown[]) {
@@ -5,7 +7,7 @@ function log(msg: string, ...args: unknown[]) {
 }
 
 // Use the install event to pre-cache all initial resources.
-self.addEventListener('install', event => {
+self.addEventListener('install', (event: ExtendableEvent) => {
     log('installed', import.meta.env.VITE_VERSION);
 
     event.waitUntil((async () => {
@@ -19,7 +21,7 @@ self.addEventListener('install', event => {
     })());
 });
 
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', (event: FetchEvent) => {
     log('fetch', event.request.url);
 
     // event.respondWith((async () => {
