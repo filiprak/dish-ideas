@@ -9,9 +9,14 @@ export default defineConfig({
             },
             output: {
                 entryFileNames(info) {
-                    return info.name == 'sw' ? 'assets/[name].js' : 'assets/[name]-[hash].js';
+                    return info.name == 'sw' ? '[name].js' : 'assets/[name]-[hash].js';
                 },
             }
         }
-    }
+    },
+    resolve: {
+        alias: {
+            '/sw.js': './src/sw/index.ts',
+        },
+    },
 });
