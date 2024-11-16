@@ -1,7 +1,7 @@
 class Api {
     private token = import.meta.env.VITE_GROQ_API_TOKEN;
 
-    private async callCompletions() {
+    private async callCompletions(payload: object) {
         return fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -10,13 +10,19 @@ class Api {
             },
             body: JSON.stringify({
                 model: 'llama3-8b-8192',
-                messages: [
-                    {
-                        role: 'user',
-                        content: 'Explain the importance of fast language models'
-                    }
-                ],
+                ...payload,
             }),
         }).then(r => r.json());
+    }
+
+    public async recipe() {
+        return this.callCompletions({
+            messages: [
+                {
+                    role: 'user',
+                    content: 'Explain the importance of fast language models'
+                }
+            ],
+        })
     }
 }
