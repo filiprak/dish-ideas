@@ -19,15 +19,17 @@ class Api {
         const result = await this.callCompletions({
             messages: [
                 {
+                    role: 'system',
+                    content: 'Format response in markdown syntax. In following structure: recipe name, ingredients, instructions'
+                },
+                {
                     role: 'user',
                     content: 'Give an idea for meal recipe for today'
-                }
+                },
             ],
         });
 
         const text = (result?.choices?.[0]?.message?.content || '') as string;
-
-        console.log(result)
 
         return text;
     }

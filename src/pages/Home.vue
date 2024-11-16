@@ -1,7 +1,7 @@
 <template>
     <Layout class="home">
         <div class="recipe">
-            <Markdown :source="recipes[0]" />
+            <Md :source="recipes[0]" />
         </div>
         <template #bottom>
             <Btn @click="load"
@@ -14,7 +14,7 @@ import Layout from '@/components/Layout.vue';
 import Btn from '@/components/Btn.vue';
 import api from '@/api';
 import { ref } from 'vue';
-import Markdown from 'vue3-markdown-it';
+import Md from '@/components/Md.vue';
 
 const recipes = ref<string[]>([]);
 
