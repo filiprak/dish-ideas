@@ -1,7 +1,9 @@
 <template>
     <Layout class="home">
         <div class="recipe">
-            <Md :source="recipes[0]" />
+            <!-- <Md :source="recipes[0]" /> -->
+
+            {{ ideas }}
         </div>
         <template #bottom>
             <Btn @click="load"
@@ -16,14 +18,13 @@ import Layout from '@/components/Layout.vue';
 import Btn from '@/components/Btn.vue';
 import api from '@/api';
 import { ref } from 'vue';
-import Md from '@/components/Md.vue';
 
-const recipes = ref<string[]>([]);
+const ideas = ref<string[]>([]);
 
 async function load() {
-    const recipe = await api.recipe();
+    const res = await api.getIdeas();
 
-    recipes.value = [recipe];
+    ideas.value = res?.ideas || [];
 }
 </script>
 <style scoped>
