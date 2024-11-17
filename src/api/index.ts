@@ -78,7 +78,7 @@ class Api {
         const Ideas = z.object({
             ideas: z.array(z.string()).describe('array of strings - list of dishes suggestions.')
         })
-        return this.callCompletions('Give an idea exactly for breakfast, lunch, dinner and meals to eat today.', Ideas);
+        return this.callCompletions('Give an idea exactly for breakfast, lunch, dinner and meals to eat today. Use polish language only.', Ideas);
     }
 }
 
