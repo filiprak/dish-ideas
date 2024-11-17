@@ -67,7 +67,7 @@ class Api {
         const text = String(result?.choices?.[0]?.message?.content || '').trim() as string;
         const parsed = extractJson(text, schema);
 
-        if (!parsed) {
+        if (!parsed || parsed.error) {
             this.last_error.value = 'Failed to parse AI json data.';
         }
 
