@@ -5,7 +5,9 @@
         </div>
         <template #bottom>
             <Btn @click="load"
-                 class="w-full py-5 rounded-none">Generate</Btn>
+                 class="w-full py-5 rounded-none">
+                Get dish plan
+            </Btn>
         </template>
     </Layout>
 </template>
