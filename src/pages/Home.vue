@@ -1,6 +1,12 @@
 <template>
     <Layout class="home">
-        <div class="recipe">
+        <template #top>
+            <div v-if="api.last_error.value"
+                 class="bg-red-600 text-white px-4 py-2">
+                {{ api.last_error.value }}
+            </div>
+        </template>
+        <div class="p-4">
             <!-- <Md :source="recipes[0]" /> -->
 
             {{ ideas }}
@@ -27,8 +33,3 @@ async function load() {
     ideas.value = res?.ideas || [];
 }
 </script>
-<style scoped>
-.recipe {
-    padding: 15px;
-}
-</style>

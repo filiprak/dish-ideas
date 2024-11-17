@@ -18,7 +18,7 @@
             ]
         },
         "removeComments": true,
-        "target": "ES6",
+        "target": "ES2018",
         "esModuleInterop": true,
         "module": "ESNext",
         "moduleResolution": "bundler",

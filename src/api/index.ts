@@ -22,8 +22,10 @@ function toAIJsonSchema<T extends ZodRawShape>(schema: ZodObject<T>): object {
 }
 
 function extractJson<O>(str: string, schema: ZodSchema<O>) {
-    const jsonRegex = /({.*?})/g;
+    const jsonRegex = /({.*?})/gs;
     const matches = str.match(jsonRegex);
+
+    console.log(str)
 
     if (!matches || !matches[0]) {
         return null;
@@ -38,7 +40,7 @@ function extractJson<O>(str: string, schema: ZodSchema<O>) {
 
 class Api {
     private token = import.meta.env.VITE_GROQ_API_TOKEN;
-    private last_error = ref<string>();
+    readonly last_error = ref<string>();
 
     private async callCompletions<T extends ZodRawShape>(prompt: string, schema: ZodObject<T>) {
         this.last_error.value = undefined;
@@ -68,7 +70,8 @@ class Api {
         const parsed = extractJson(text, schema);
 
         if (!parsed || parsed.error) {
-            this.last_error.value = 'Failed to parse AI json data.';
+            console.log(parsed)
+            this.last_error.value = `Failed to parse AI json data: ${parsed?.error.message || 'Unknown error'}`;
         }
 
         return parsed?.data;
