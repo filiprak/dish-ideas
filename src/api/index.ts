@@ -25,8 +25,6 @@ function extractJson<O>(str: string, schema: ZodSchema<O>) {
     const jsonRegex = /({.*?})/gs;
     const matches = str.match(jsonRegex);
 
-    console.log(str)
-
     if (!matches || !matches[0]) {
         return null;
     }
@@ -70,7 +68,6 @@ class Api {
         const parsed = extractJson(text, schema);
 
         if (!parsed || parsed.error) {
-            console.log(parsed)
             this.last_error.value = `Failed to parse AI json data: ${parsed?.error.message || 'Unknown error'}`;
         }
 
