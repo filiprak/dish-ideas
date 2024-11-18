@@ -1,5 +1,5 @@
 <template>
-    <Layout class="home">
+    <Layout class="home text-gray-400">
         <template #top>
             <div v-if="api.last_error.value"
                  class="bg-red-600 text-white px-4 py-2">
@@ -7,7 +7,8 @@
             </div>
         </template>
         <div class="p-4">
-            <div class="space-y-4 text-left text-gray-400">
+            <div v-if="!ideas" class="flex justify-center align-middle p-5">Loading...</div>
+            <div class="space-y-4 text-left">
                 <div v-for="(idea, k) in ideas">
                     <h1 class="text-lg font-bold capitalize mb-2">{{ k }}</h1>
                     <div v-for="{ name, short_description } in [idea]"
@@ -30,7 +31,7 @@
 import Layout from '@/components/Layout.vue';
 import Btn from '@/components/Btn.vue';
 import api from '@/api';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const ideas = ref<Awaited<ReturnType<typeof api.getIdeas>>>();
 
@@ -39,4 +40,8 @@ async function load() {
 
     ideas.value = res;
 }
+
+onMounted(() => {
+    load();
+});
 </script>
