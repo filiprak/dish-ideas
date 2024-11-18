@@ -38,13 +38,15 @@ function extractJson<O>(str: string, schema: ZodSchema<O>) {
 
 class Api {
     private token = import.meta.env.VITE_GROQ_API_TOKEN;
+    readonly endpoint_url = 'https://api.groq.com/openai/v1/chat/completions';
+    readonly model = 'llama3-8b-8192';
     readonly last_error = ref<string>();
 
     private async callCompletions<T extends ZodRawShape>(prompt: string, schema: ZodObject<T>) {
         this.last_error.value = undefined;
 
         const payload = {
-            model: 'llama3-8b-8192',
+            model: this.model,
             messages: [
                 {
                     role: 'system',
@@ -55,7 +57,7 @@ class Api {
                 type: 'json_object',
             },
         };
-        const result = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        const result = await fetch(this.endpoint_url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
