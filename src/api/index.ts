@@ -88,7 +88,7 @@ class Api {
             }),
         });
         return this.callCompletions(
-            '',
+            'You are diet assistant.',
             'Please generate a meal plan for today, including breakfast, lunch, dinner, and two snack options. The meals should be balanced and healthy, with options for a high-protein diet. Include a brief description of each meal and ingredients. If possible, suggest quick recipes or prep tips for each meal. Keep the total daily calories around 2,000.',
             Ideas
         );
