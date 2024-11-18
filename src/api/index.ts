@@ -78,7 +78,9 @@ class Api {
 
     public async getIdeas() {
         const Ideas = z.object({
-            ideas: z.array(z.string()).describe('array of strings - list of dishes suggestions.')
+            breakfast: z.array(z.string()).describe('list of 3 dish suggestions to eat for breakfast.'),
+            lunch: z.array(z.string()).describe('list of 3 dish suggestions to eat for lunch.'),
+            dinner: z.array(z.string()).describe('list of 3 dish suggestions to eat for dinner.'),
         })
         return this.callCompletions('Give an idea exactly for breakfast, lunch, dinner and meals to eat today.', Ideas);
     }
