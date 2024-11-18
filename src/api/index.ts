@@ -22,27 +22,19 @@ function toAIJsonSchema<T extends ZodRawShape>(schema: ZodObject<T>): object {
 }
 
 function extractJson<O>(str: string, schema: ZodSchema<O>) {
-    const jsonRegex = /({.*?})/gs;
-    const matches = str.match(jsonRegex);
-
-    if (!matches || !matches[0]) {
-        return null;
-    }
-    try {
-        const json = JSON.parse(matches[0]);
-        return schema.safeParse(json);
-    } catch (e) {
-        return null;
-    }
+    const jsonRegex = /({.*})/gs;
+    const matches = str.match(jsonRegex) || '';
+    const json = JSON.parse(matches[0]);
+    return schema.parse(json);
 }
 
 class Api {
-    private token = import.meta.env.VITE_GROQ_API_TOKEN;
+    private readonly token = import.meta.env.VITE_GROQ_API_TOKEN;
     readonly endpoint_url = 'https://api.groq.com/openai/v1/chat/completions';
     readonly model = 'llama-3.1-70b-versatile';
     readonly last_error = ref<string>();
 
-    private async callCompletions<T extends ZodRawShape>(prompt: string, schema: ZodObject<T>) {
+    private async callCompletions<T extends ZodRawShape>(system: string, prompt: string, schema: ZodObject<T>) {
         this.last_error.value = undefined;
 
         const payload = {
@@ -50,7 +42,11 @@ class Api {
             messages: [
                 {
                     role: 'system',
-                    content: `${prompt}\nYou are a data API that responds in JSON. The JSON schema must include ${JSON.stringify(toAIJsonSchema(schema), null, 4)}`,
+                    content: `${system}\nYou are a data API that exclusively responds in JSON format. The output must strictly adhere to the following JSON schema. Ensure the structure is precisely followed, with no deviations or omissions. For any missing data fields, use null or an empty array ([]) as appropriate. Be concise and avoid adding extra fields or unnecessary explanations in the response. Required response JSON structure: ${JSON.stringify(toAIJsonSchema(schema), null, 4)}`,
+                },
+                {
+                    role: 'user',
+                    content: `${prompt}`,
                 },
             ],
             response_format: {
@@ -66,23 +62,36 @@ class Api {
             body: JSON.stringify(payload),
         }).then(r => r.json()).catch((err) => { this.last_error.value = `Failed to load data. Please try later. (Error: ${err})` });
 
-        const text = String(result?.choices?.[0]?.message?.content || '').trim() as string;
-        const parsed = extractJson(text, schema);
-
-        if (!parsed || parsed.error) {
-            this.last_error.value = `Failed to parse AI json data: ${parsed?.error.message || 'Unknown error'}`;
+        try {
+            const text = String(result?.choices?.[0]?.message?.content || '').trim() as string;
+            return extractJson(text, schema);
+        } catch (err) {
+            console.error(err);
+            this.last_error.value = `Something went wrong :( Please try again.`;
+            return undefined;
         }
-
-        return parsed?.data;
     }
 
     public async getIdeas() {
         const Ideas = z.object({
-            breakfast: z.array(z.string()).describe('list of 3 dish suggestions to eat for breakfast.'),
-            lunch: z.array(z.string()).describe('list of 3 dish suggestions to eat for lunch.'),
-            dinner: z.array(z.string()).describe('list of 3 dish suggestions to eat for dinner.'),
-        })
-        return this.callCompletions('Give an idea exactly for breakfast, lunch, dinner and meals to eat today.', Ideas);
+            breakfast: z.object({
+                name: z.string().describe('suggested breakfast dish name'),
+                short_description: z.string().describe('suggested breakfast short description'),
+            }),
+            lunch: z.object({
+                name: z.string().describe('suggested lunch dish name'),
+                short_description: z.string().describe('suggested lunch short description'),
+            }),
+            dinner: z.object({
+                name: z.string().describe('suggested dinner dish name'),
+                short_description: z.string().describe('suggested dinner short description'),
+            }),
+        });
+        return this.callCompletions(
+            '',
+            'Please generate a meal plan for today, including breakfast, lunch, dinner, and two snack options. The meals should be balanced and healthy, with options for a high-protein diet. Include a brief description of each meal and ingredients. If possible, suggest quick recipes or prep tips for each meal. Keep the total daily calories around 2,000.',
+            Ideas
+        );
     }
 }
 

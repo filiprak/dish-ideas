@@ -10,20 +10,10 @@
             <div class="space-y-4 text-left text-gray-500 dark:text-gray-400">
                 <div v-for="(idea, k) in ideas">
                     <h1 class="text-lg font-bold capitalize mb-2">{{ k }}</h1>
-                    <div v-for="name in idea"
+                    <div v-for="{ name, short_description } in [idea]"
                         class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <svg class="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 16 12">
-                            <path stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M1 5.917 5.724 10.5 15 1.5" />
-                        </svg>
-                        <span>{{ name }}</span>
+                        <div>{{ name }}</div>
+                        <div>{{ short_description }}</div>
                     </div>
                 </div>
             </div>
