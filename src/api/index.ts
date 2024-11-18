@@ -39,7 +39,7 @@ function extractJson<O>(str: string, schema: ZodSchema<O>) {
 class Api {
     private token = import.meta.env.VITE_GROQ_API_TOKEN;
     readonly endpoint_url = 'https://api.groq.com/openai/v1/chat/completions';
-    readonly model = 'llama3-8b-8192';
+    readonly model = 'llama-3.1-70b-versatile';
     readonly last_error = ref<string>();
 
     private async callCompletions<T extends ZodRawShape>(prompt: string, schema: ZodObject<T>) {
@@ -80,7 +80,7 @@ class Api {
         const Ideas = z.object({
             ideas: z.array(z.string()).describe('array of strings - list of dishes suggestions.')
         })
-        return this.callCompletions('Give an idea exactly for breakfast, lunch, dinner and meals to eat today. Use polish language only.', Ideas);
+        return this.callCompletions('Give an idea exactly for breakfast, lunch, dinner and meals to eat today.', Ideas);
     }
 }
 
