@@ -7,12 +7,12 @@
             </div>
         </template>
         <div class="p-4">
-            <div class="space-y-4 text-left text-gray-500 dark:text-gray-400">
+            <div class="space-y-4 text-left text-gray-400">
                 <div v-for="(idea, k) in ideas">
                     <h1 class="text-lg font-bold capitalize mb-2">{{ k }}</h1>
                     <div v-for="{ name, short_description } in [idea]"
-                        class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <div>{{ name }}</div>
+                         class="border-2 p-3 border-teal-700 rounded-xl">
+                        <div class="font-bold text-teal-400">{{ name }}</div>
                         <div>{{ short_description }}</div>
                     </div>
                 </div>
